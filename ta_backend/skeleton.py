@@ -15,103 +15,179 @@ also be used as template for Python modules.
 
 Note: This skeleton file can be safely removed if not needed!
 """
-from __future__ import division, print_function, absolute_import
+from flask import Flask,json,jsonify,request
+application = Flask(__name__)
 
-import argparse
-import sys
-import logging
+@application.route("/api/v1/onlinereputation/volume/get",methods=['GET'])
+def getOnlineReputationbasedonVolume():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'total':10000
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-from ta_backend import __version__
+@application.route("/api/v1/onlinereputation/diversity/get",methods=['GET'])
+def getOnlineReputationbasedonDiversity():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'total_text':10000,
+                'total_media':5000,
+                'total_extended_entities':4000
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-__author__ = "vindafadilla"
-__copyright__ = "vindafadilla"
-__license__ = "none"
+@application.route("/api/v1/onlinereputation/validation/get",methods=['GET'])
+def getOnlineReputationbasedonValidation():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'total_sentiment_pos':10000,
+                'total_sentiment_neg':5000
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-_logger = logging.getLogger(__name__)
+@application.route("/api/v1/onlinereputation/relevance/get",methods=['GET'])
+def getOnlineReputationbasedonRelevance():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'starbucks':["good","delicious"]
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
+@application.route("/api/v1/customerneeds/overall",methods=['GET'])
+def getCustomerNeedsOverall():
+    try:
+        time_from=request.args.get('time_from')
+        time_to=request.args.get('time_to')
+        machineDetail = {
+                'positive':["frapucino","starbucks"],
+                'negative':["service","starbucks acai"]
+                }
+        #return json.dumps(machineDetail)
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-def fib(n):
-    """Fibonacci example function
+@application.route("/api/v1/customerneeds/sentimentwordsperaspect",methods=['GET'])
+def getCustomerNeedsSentimentWordsperAspect():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        aspect=request.args.get('aspect')
+        sentiment=request.args.get('sentiment')
+        page=request.args.get('page')
+        machineDetail = {
+                'starbucks':["good","delicious"]
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-    Args:
-      n (int): integer
+@application.route("/api/v1/communityengagement/tweetengagement/get",methods=['GET'])
+def getCommunityEngagementTweetEngagement():
+    try:
+        tweet_id=request.args.get('tweet_id')
+        machineDetail = {
+                'tweet':{
+                    'created_at':"Fri May 05 03:35:21 +0000 2017",
+                    'tweet_id_str':"250075927102759558",
+                    'text':"Get ready for our spring flavor. Yum!"
+                    },
+                'total_retweets':"10",
+                'total_likes':"10",
+                'total_replies':"1",
+                'replies':[
+                    {
+                        'tweet_id_str':"250075927172759552",
+                        'created_at':"Sat May 06 03:35:21 +0000 2017",
+                        'text':"@starbucks looking forward to your newest coffee.Love you",
+                        'user':{
+                            'name':"Thomas John Wakeman",
+                            'user_id_str':"70789458",
+                            'followers_count':"63",
+                            'verified':"false"
+                            }
+                        }
+                    ]
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-    Returns:
-      int: n-th Fibonacci number
-    """
-    assert n > 0
-    a, b = 1, 1
-    for i in range(n-1):
-        a, b = b, a+b
-    return a
+@application.route("/api/v1/communityengagement/overallengagement/get",methods=['GET'])
+def getCommunityEngagemnetOverallEngagement():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'positive':["frapucino","starbucks"],
+                'negative':["service","starbucks acai"]
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
+@application.route("/api/v1/communityengagement/replyvalidity/get",methods=['GET'])
+def getCommunityEngagementReplyValidity():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'positive':["frapucino","starbucks"],
+                'negative':["service","starbucks acai"]
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
-def parse_args(args):
-    """Parse command line parameters
-
-    Args:
-      args ([str]): command line parameters as list of strings
-
-    Returns:
-      :obj:`argparse.Namespace`: command line parameters namespace
-    """
-    parser = argparse.ArgumentParser(
-        description="Just a Fibonnaci demonstration")
-    parser.add_argument(
-        '--version',
-        action='version',
-        version='ta_backend {ver}'.format(ver=__version__))
-    parser.add_argument(
-        dest="n",
-        help="n-th Fibonacci number",
-        type=int,
-        metavar="INT")
-    parser.add_argument(
-        '-v',
-        '--verbose',
-        dest="loglevel",
-        help="set loglevel to INFO",
-        action='store_const',
-        const=logging.INFO)
-    parser.add_argument(
-        '-vv',
-        '--very-verbose',
-        dest="loglevel",
-        help="set loglevel to DEBUG",
-        action='store_const',
-        const=logging.DEBUG)
-    return parser.parse_args(args)
-
-
-def setup_logging(loglevel):
-    """Setup basic logging
-
-    Args:
-      loglevel (int): minimum loglevel for emitting messages
-    """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logging.basicConfig(level=loglevel, stream=sys.stdout,
-                        format=logformat, datefmt="%Y-%m-%d %H:%M:%S")
-
-
-def main(args):
-    """Main entry point allowing external calls
-
-    Args:
-      args ([str]): command line parameter list
-    """
-    args = parse_args(args)
-    setup_logging(args.loglevel)
-    _logger.debug("Starting crazy calculations...")
-    print("The {}-th Fibonacci number is {}".format(args.n, fib(args.n)))
-    _logger.info("Script ends here")
-
-
-def run():
-    """Entry point for console_scripts
-    """
-    main(sys.argv[1:])
-
+@application.route("/api/v1/communityengagement/mentionvalidity/get",methods=['GET'])
+def getCommunityEngagementMentionValidity():
+    try:
+        time_from=request.args.get('from')
+        time_to=request.args.get('to')
+        machineDetail = {
+                'positive':["frapucino","starbucks"],
+                'negative':["service","starbucks acai"]
+                }
+        return jsonify(machineDetail,time_from,time_to)
+        #return jsonify(status='OK',message='hello vinda')
+    except Exception as e:
+        #return str(e)
+        return jsonify(status='ERROR',message=str(e))
 
 if __name__ == "__main__":
-    run()
+    application.run(host='0.0.0.0')
+
